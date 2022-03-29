@@ -16,7 +16,7 @@ public class WriteFileTODB {
 
     /**
      * write files to databases and generate queries
-     * note that we need to generate vectors in python
+     *
      * @throws IOException
      */
     static void writeDBPEDIAFiles() throws IOException {
@@ -34,18 +34,17 @@ public class WriteFileTODB {
         qd.generate();
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         try {
-            //writeDBPEDIAFiles();
+            writeDBPEDIAFiles();
             //writeLUBMFiles();
 
-            Util.writeVector(Util.LUBM10U);
-        }catch (OutOfMemoryError e) {
+            //Util.writeVector(Util.LUBM10U);
+        } catch (OutOfMemoryError e) {
             Runtime.getRuntime().gc();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             //SendMail.getInstance().send();
         }
     }

@@ -114,8 +114,9 @@ public class TestAllLubmNode {
                         int itCnt = 0;
                         for (int j = 0; j < iTime; j++) {
                             itCnt++;
-                            //ignore the exception of search
+                            //ignore the exception in the search process
                             try {
+                                // the actual place of searching
                                 sb.search(gb, words.get(i), wordsMap);
                             }catch (Exception ignored) {
                             }
@@ -183,18 +184,20 @@ public class TestAllLubmNode {
 
     void dealWithBanks(String st) throws IOException {
         search(BiSearchNodeBase.getInstance(), GraphBanksII.getInstance(), 3, 3, st, "Banks-IIBase");
-        TestAllGivenNode.wirteOther("Banks-IIBase");
         BiSearchNodeBase.closeInstance();
         GraphBanksII.closeInstance();
     }
 
     void dealWithDPBF(String st){
         search(DPBFNodeBase.getInstance(), GraphDPBF.getInstance(), 3, 3, st, "DPBFBase");
-        TestAllGivenNode.wirteOther("DPBFBase");
         DPBFNodeBase.closeInstance();
         GraphDPBF.closeInstance();
     }
 
+    /**
+     * the entry point of eo
+     * @param st
+     */
     void dealWithEO(String st) {
         double []als = new double[]{0.1, 0.5, 0.9};
         for (double al : als) {

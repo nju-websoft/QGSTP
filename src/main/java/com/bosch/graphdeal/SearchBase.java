@@ -4,12 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
  * @author Yuxuan Shi
  * @date 2020/5/25
  */
 public abstract class SearchBase {
     abstract public AnsTree getAnsTree();
+
     abstract public JsonTree JsonGenerate();
 
     /**
@@ -28,13 +28,15 @@ public abstract class SearchBase {
         startTime = System.currentTimeMillis();
         this.repeatFlag = true;
     }
+
     /**
-     * to mark whether search the should be repeated
+     * to mark whether search should be repeated
      */
     private boolean repeatFlag = true;
 
     /**
      * check time out
+     *
      * @return true if time out
      */
     protected boolean isTimeOut() {
@@ -52,21 +54,23 @@ public abstract class SearchBase {
     }
 
     /**
-     * support lumb search
-     * @param gg graph
+     * the entry point of search algorithm
+     *
+     * @param gg           graph
      * @param keywordList0 keyword
-     * @param mp map of keyword
+     * @param mp           map of keyword
      * @throws Exception
      */
-    public void search(GraphBase gg, List<String> keywordList0, Map<String, List<Integer>> mp) throws Exception{
+    public void search(GraphBase gg, List<String> keywordList0, Map<String, List<Integer>> mp) throws Exception {
         throw new Exception("need to be implemented");
-    };
+    }
 
     /**
      * search query
-     * @param gg graph
+     *
+     * @param gg           graph
      * @param keywordList0 keyword
      * @throws Exception
      */
-    abstract public void search(GraphBase gg, List<String> keywordList0) throws Exception ;
+    abstract public void search(GraphBase gg, List<String> keywordList0) throws Exception;
 }

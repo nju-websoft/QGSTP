@@ -9,7 +9,6 @@ import com.bosch.qgstp.GraphOneStar;
 import com.bosch.qgstp.OneStar;
 import com.bosch.qgstp.OneStarBase;
 import com.bosch.qgstp.PruneControl;
-import com.bosch.summary.AnsSummary;
 
 import java.io.*;
 import java.util.*;
@@ -174,14 +173,12 @@ public class TestAllGivenNode {
 
     void dealWithBanks(String st) throws IOException {
         search(BiSearchNodeBase.getInstance(), GraphBanksII.getInstance(), 3, 3, st, "Banks-IIBase");
-        wirteOther("Banks-IIBase");
         BiSearchNodeBase.closeInstance();
         GraphBanksII.closeInstance();
     }
 
     void dealWithDPBF(String st){
         search(DPBFNodeBase.getInstance(), GraphDPBF.getInstance(), 3, 3, st, "DPBFBase");
-        wirteOther("DPBFBase");
         DPBFNodeBase.closeInstance();
         GraphDPBF.closeInstance();
     }
@@ -311,47 +308,6 @@ public class TestAllGivenNode {
         finally {
         }
 
-    }
-
-    /**
-     * write the ans when alpha = 0.1 and alpha = 0.9
-     * @param alg the name of the algorithm
-     * @throws IOException
-     */
-    public static void wirteOther(String alg){
-        try {
-            Properties pps = Util.getInitPPS();
-            String st = pps.get("GRAPH_NAME").toString();
-
-            Util.setAlpha(0.5);
-            List<AnsSummary.QueryInfo> infos = AnsSummary.readAnsTxt(st, alg);
-            for (double al : new double[]{0.1, 0.9}) {
-                PrintWriter fop = new PrintWriter(
-                        new File(Util.getAnsTxtWithAlpha(st, alg, al)));
-
-                double tTime = 0, tWeight = 0, tSal = 0D, tCoh = 0D;
-                for (AnsSummary.QueryInfo queryInfo : infos) {
-                    fop.println(queryInfo.getQueries());
-                    fop.println("time: " + queryInfo.getTime() + " ms");
-                    double score = queryInfo.getSal() * al + (1 - al) * queryInfo.getCoh();
-                    fop.println("weight: " + score + " " + queryInfo.getSal() + " " + queryInfo.getCoh());
-
-                    tTime += queryInfo.getTime();
-                    tWeight += score;
-                    tSal += queryInfo.getSal();
-                    tCoh += queryInfo.getCoh();
-                }
-                tTime = tTime / infos.size();
-                tWeight = tWeight / infos.size();
-                tSal = tSal / infos.size();
-                tCoh = tCoh / infos.size();
-                fop.println("avg time: " + tTime + " ms");
-                fop.println("avg weight: " + tWeight + " " + tSal + " " + tCoh);
-                fop.close();
-            }
-        } catch (IOException e) {
-
-        }
     }
 
     public static void main(String[] args) throws IOException {
